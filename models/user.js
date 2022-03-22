@@ -13,6 +13,21 @@ let UserSchema = new Schema(
     }
 );
 
+UserSchema.virtual('name').get(() => {
+    let fullname = '';
+    if (this.first_name) {
+        fullname += this.first_name;
+    }
+
+    if (this.last_name) {
+        fullname += ' ' + this.last_name;
+    }
+
+    return fullname;
+});
+
 UserSchema.virtual('url').get(() => {
     return '/users/' + this._id;
-})
+});
+
+module.exports = mongoose.model('User', UserSchema);
